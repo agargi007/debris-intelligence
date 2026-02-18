@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debris Intelligence</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="navbar">
+    <div>
+        <h2>🌊 Debris Intelligence</h2>
+        <p class="tagline">AI-powered debris detection and environmental analytics</p>
+    </div>
+    <div>
+        <label>Role:</label>
+        <select id="roleSelect">
+            <option value="viewer">Viewer</option>
+            <option value="analyst">Analyst</option>
+            <option value="researcher">Researcher</option>
+        </select>
+    </div>
+</div>
+
+<div class="upload-section">
+    <input type="file" id="fileInput" accept="image/*,video/*">
+    <button onclick="uploadFile()">Run Analysis</button>
+    <p id="loading" class="hidden">Processing...</p>
+</div>
+
+<div id="results" class="hidden">
+
+    <div class="card">
+        <h3>Original</h3>
+        <img id="originalImg" />
+    </div>
+
+    <div class="card">
+        <h3>Enhanced</h3>
+        <img id="enhancedImg" />
+    </div>
+
+    <div class="card">
+        <h3>Detection</h3>
+        <img id="detectedImg" />
+    </div>
+
+    <div class="card analystOnly hidden">
+        <h3>Spatial Heatmap (Video Only)</h3>
+        <img id="heatmapImg" />
+    </div>
+
+    <div class="card researcherOnly hidden">
+        <h3>Analytics</h3>
+        <div id="stats"></div>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
