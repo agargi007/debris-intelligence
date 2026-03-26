@@ -8,3 +8,4 @@ backend/outputs/
 *.mp4
 *.avi
 *.png
+!stitch_debris_intelligence_dashboard/**/*.png

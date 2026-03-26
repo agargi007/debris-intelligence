@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Debris Intelligence | Heatmap Visualization</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-fixed": "#004a41",
+              "surface-tint": "#39b8fd",
+              "on-error-container": "#ffa8a3",
+              "inverse-primary": "#006591",
+              "on-tertiary-container": "#005e54",
+              "secondary": "#2db7f2",
+              "on-primary-fixed": "#00121e",
+              "surface-dim": "#070d1f",
+              "on-secondary-container": "#f2f9ff",
+              "background": "#070d1f",
+              "surface": "#070d1f",
+              "surface-container": "#11192e",
+              "primary-fixed": "#34b5fa",
+              "primary": "#39b8fd",
+              "tertiary": "#c6fff3",
+              "surface-container-high": "#171f36",
+              "primary-dim": "#17a8ec",
+              "outline": "#6f758b",
+              "on-secondary": "#003044",
+              "error": "#ff716c",
+              "on-secondary-fixed-variant": "#005777",
+              "primary-container": "#1faaef",
+              "on-tertiary-fixed-variant": "#00695e",
+              "secondary-fixed-dim": "#73ceff",
+              "inverse-on-surface": "#4f5469",
+              "on-error": "#490006",
+              "error-container": "#9f0519",
+              "surface-bright": "#222b47",
+              "surface-container-highest": "#1c253e",
+              "secondary-dim": "#05a9e3",
+              "secondary-fixed": "#9bdaff",
+              "tertiary-fixed": "#65fde6",
+              "surface-container-lowest": "#000000",
+              "tertiary-fixed-dim": "#54eed8",
+              "surface-variant": "#1c253e",
+              "inverse-surface": "#faf8ff",
+              "error-dim": "#d7383b",
+              "tertiary-container": "#65fde6",
+              "on-tertiary": "#00685c",
+              "on-primary": "#00324a",
+              "primary-fixed-dim": "#17a8ec",
+              "secondary-container": "#00668a",
+              "tertiary-dim": "#48e5d0",
+              "on-surface": "#dfe4fe",
+              "outline-variant": "#41475b",
+              "on-surface-variant": "#a5aac2",
+              "on-primary-container": "#002639",
+              "on-background": "#dfe4fe",
+              "on-secondary-fixed": "#00394f",
+              "surface-container-low": "#0c1326",
+              "on-primary-fixed-variant": "#003954"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #070d1f;
+            color: #dfe4fe;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .heatmap-glow {
+            filter: blur(8px);
+        }
+        .ghost-border {
+            outline: 1px solid rgba(65, 71, 91, 0.2);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-6 py-4 bg-[#070d1f]/70 backdrop-blur-3xl border-b border-[#39b8fd]/20 shadow-[0_0_15px_rgba(57,184,253,0.1)] docked full-width top-0 sticky z-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#39b8fd] text-2xl" data-icon="waves">waves</span>
+<div>
+<h1 class="text-xl font-black text-[#39b8fd] tracking-tighter uppercase">Debris Heatmap</h1>
+<p class="text-[10px] font-semibold text-[#a5aac2] tracking-widest uppercase">Spatial Frequency Analysis</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-bold text-on-surface">Submersible HUD Operator</p>
+<p class="text-[10px] text-primary">ID: ALPHA-09</p>
+</div>
+<div class="h-10 w-10 rounded-full bg-surface-container-highest border border-primary/30 overflow-hidden">
+<img alt="Avatar" class="w-full h-full object-cover" data-alt="close-up portrait of a high-tech naval operator in a dark blue uniform with holographic lighting reflections on face" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAET1rJaN9AvviGIaUrY627ackdqdzlPHXDN-Br0dSpiVntqPvNld259O3pPsIKNuKS-jQlui0Wmd_3SuqpDCI80-YviVoQ7VJ5DvnxgnPHDE_hjhKYf-5miS7c4AnW-M4czTYEKIvNREUYL3OjDSEblt4rW2sfX7ofJ_vtNTdNRDWP0fnrs8cq7wh7evQXG5pnC-EBWaYppk1u-WWI3CgXt7uigxY36LDe0n_7dxniEAk8MXXjs9gZyTNKN6PDZTY98rfd6tOafSM"/>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 pt-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Data Panels -->
+<div class="lg:col-span-4 space-y-8">
+<!-- Hotspot Analysis Card -->
+<section class="bg-surface-container-low/80 backdrop-blur-2xl p-6 rounded-2xl ghost-border shadow-[0_0_15px_rgba(57,184,253,0.05)]">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-sm font-bold tracking-widest uppercase text-on-surface">Hotspot Analysis</h2>
+<span class="material-symbols-outlined text-primary text-xl" data-icon="analytics">analytics</span>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-end border-b border-outline-variant/10 pb-2">
+<span class="text-on-surface-variant text-xs font-medium">Total Detection Points</span>
+<span class="text-2xl font-black text-primary tracking-tighter">847</span>
+</div>
+<div class="flex justify-between items-end border-b border-outline-variant/10 pb-2">
+<span class="text-on-surface-variant text-xs font-medium">Peak Concentration</span>
+<span class="text-lg font-bold text-on-surface">Sector B4</span>
+</div>
+<div class="flex justify-between items-end border-b border-outline-variant/10 pb-2">
+<span class="text-on-surface-variant text-xs font-medium">Hotspot Clusters</span>
+<span class="text-lg font-bold text-tertiary-fixed">3</span>
+</div>
+<div class="flex justify-between items-end">
+<span class="text-on-surface-variant text-xs font-medium">Coverage Area</span>
+<span class="text-lg font-bold text-secondary">62%</span>
+</div>
+</div>
+<div class="mt-8">
+<button class="w-full py-4 bg-gradient-to-r from-primary to-secondary rounded-xl font-bold text-on-primary text-sm flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-95 shadow-[0_0_20px_rgba(57,184,253,0.3)]">
+<span class="material-symbols-outlined text-lg" data-icon="download">download</span>
+                        Export CSV Data
+                    </button>
+</div>
+</section>
+<!-- Video Source Info Card -->
+<section class="bg-surface-container-low/80 backdrop-blur-2xl p-6 rounded-2xl ghost-border">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="video_settings">video_settings</span>
+<h2 class="text-sm font-bold tracking-widest uppercase text-on-surface">Video Source</h2>
+</div>
+<div class="space-y-3">
+<div class="bg-surface-container/50 p-3 rounded-lg">
+<p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Filename</p>
+<p class="text-sm font-semibold truncate text-primary">ROV_scan_004.mp4</p>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-surface-container/50 p-3 rounded-lg">
+<p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Duration</p>
+<p class="text-sm font-semibold">2:34</p>
+</div>
+<div class="bg-surface-container/50 p-3 rounded-lg">
+<p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Detection Rate</p>
+<p class="text-sm font-semibold text-tertiary-fixed">45.8%</p>
+</div>
+</div>
+<div class="bg-surface-container/50 p-3 rounded-lg">
+<p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Frames Processed</p>
+<div class="flex justify-between items-center">
+<p class="text-sm font-semibold">1,847</p>
+<div class="w-24 h-1 bg-outline-variant/30 rounded-full overflow-hidden">
+<div class="w-3/4 h-full bg-primary shadow-[0_0_8px_#39b8fd]"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Heatmap Visualization -->
+<div class="lg:col-span-8">
+<div class="bg-surface-container-low rounded-2xl ghost-border overflow-hidden relative min-h-[600px] flex flex-col">
+<!-- Visual Map Header -->
+<div class="p-6 flex justify-between items-center z-10">
+<div>
+<h2 class="text-lg font-black text-on-surface tracking-tight">Debris Spatial Heatmap</h2>
+<p class="text-xs text-on-surface-variant">Live coordinate mapping from sub-surface sensors</p>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1 bg-surface-container-high rounded-full text-[10px] font-bold uppercase tracking-wider text-primary border border-primary/20">Live Sync</button>
+<button class="px-3 py-1 bg-surface-container-high rounded-full text-[10px] font-bold uppercase tracking-wider text-on-surface-variant hover:text-on-surface transition-colors">Filters</button>
+</div>
+</div>
+<!-- Heatmap Body -->
+<div class="flex-grow relative bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-surface-container-high to-surface-dim overflow-hidden mx-4 mb-4 rounded-xl border border-outline-variant/10">
+<!-- X/Y Axes Labels -->
+<div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] font-black uppercase tracking-[0.3em] text-outline z-10">X Position (pixels)</div>
+<div class="absolute left-4 top-1/2 -translate-y-1/2 -rotate-90 text-[10px] font-black uppercase tracking-[0.3em] text-outline z-10">Y Position (pixels)</div>
+<!-- Grid Pattern -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: linear-gradient(#39b8fd 1px, transparent 1px), linear-gradient(90deg, #39b8fd 1px, transparent 1px); background-size: 40px 40px;"></div>
+<!-- Heatmap Points (Synthesized) -->
+<div class="absolute inset-0 p-12">
+<!-- High Density (Red) -->
+<div class="absolute top-[30%] left-[40%] w-32 h-32 bg-error/40 rounded-full blur-3xl"></div>
+<div class="absolute top-[35%] left-[42%] w-4 h-4 bg-error rounded-full shadow-[0_0_20px_#ff716c]"></div>
+<div class="absolute top-[28%] left-[38%] w-3 h-3 bg-error/80 rounded-full"></div>
+<!-- Medium Density (Yellow) -->
+<div class="absolute top-[60%] left-[20%] w-40 h-40 bg-yellow-400/20 rounded-full blur-3xl"></div>
+<div class="absolute top-[65%] left-[25%] w-4 h-4 bg-yellow-400 rounded-full shadow-[0_0_20px_#facc15]"></div>
+<div class="absolute top-[62%] left-[22%] w-3 h-3 bg-yellow-500 rounded-full"></div>
+<!-- Low Density (Cyan/Blue) -->
+<div class="absolute top-[15%] left-[70%] w-24 h-24 bg-primary/20 rounded-full blur-3xl"></div>
+<div class="absolute top-[20%] left-[75%] w-4 h-4 bg-primary rounded-full shadow-[0_0_20px_#39b8fd]"></div>
+<!-- Scatter Points -->
+<div class="absolute top-[45%] left-[60%] w-2 h-2 bg-primary-fixed-dim rounded-full opacity-60"></div>
+<div class="absolute top-[80%] left-[85%] w-2 h-2 bg-primary-fixed-dim rounded-full opacity-60"></div>
+<div class="absolute top-[10%] left-[15%] w-2 h-2 bg-primary-fixed-dim rounded-full opacity-60"></div>
+<div class="absolute top-[55%] left-[10%] w-2 h-2 bg-tertiary-fixed rounded-full opacity-60"></div>
+</div>
+<!-- Color Legend Bar -->
+<div class="absolute bottom-12 right-8 bg-surface-container-low/90 backdrop-blur-md p-4 rounded-xl ghost-border z-10 w-64">
+<div class="flex justify-between text-[8px] font-black uppercase tracking-widest text-on-surface-variant mb-2">
+<span>Low</span>
+<span>Medium</span>
+<span>High</span>
+</div>
+<div class="h-2 w-full bg-gradient-to-r from-[#006591] via-yellow-400 to-error rounded-full"></div>
+<div class="flex justify-between text-[8px] font-bold text-outline mt-1 px-1">
+<span>Blue</span>
+<span>Yellow</span>
+<span>Red</span>
+</div>
+</div>
+<!-- Scanning Line Effect (Static Visual) -->
+<div class="absolute left-0 right-0 h-[1px] bg-primary/30 shadow-[0_0_10px_#39b8fd] top-1/2 z-0"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-[#0c1326]/80 backdrop-blur-2xl z-50 rounded-t-[2rem] shadow-[0_-10px_40px_rgba(0,0,0,0.4)]">
+<a class="flex flex-col items-center justify-center text-[#a5aac2] opacity-60 px-4 py-2 hover:text-[#39b8fd] hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#a5aac2] opacity-60 px-4 py-2 hover:text-[#39b8fd] hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="upload">upload</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold">Upload</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#a5aac2] opacity-60 px-4 py-2 hover:text-[#39b8fd] hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="database">database</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold">Log</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#a5aac2] opacity-60 px-4 py-2 hover:text-[#39b8fd] hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="compare">compare</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold">Compare</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#39b8fd] bg-[#39b8fd]/10 rounded-2xl px-4 py-2 shadow-[0_0_10px_rgba(57,184,253,0.2)]" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="layers">layers</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold">Heatmap</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#a5aac2] opacity-60 px-4 py-2 hover:text-[#39b8fd] hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="history">history</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold">History</span>
+</a>
+</nav>
+<!-- Background Elements -->
+<div class="fixed inset-0 -z-10 pointer-events-none">
+<div class="absolute top-1/4 -left-20 w-96 h-96 bg-primary/5 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-secondary/5 rounded-full blur-[120px]"></div>
+</div>
+</body></html>

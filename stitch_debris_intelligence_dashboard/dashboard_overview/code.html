@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Debris Intelligence Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "error-dim": "#d7383b",
+                "on-primary-fixed-variant": "#003954",
+                "on-error-container": "#ffa8a3",
+                "inverse-on-surface": "#4f5469",
+                "outline-variant": "#41475b",
+                "inverse-primary": "#006591",
+                "on-surface-variant": "#a5aac2",
+                "background": "#070d1f",
+                "surface-container-highest": "#1c253e",
+                "on-error": "#490006",
+                "surface-container": "#11192e",
+                "primary-fixed-dim": "#17a8ec",
+                "on-tertiary-fixed-variant": "#00695e",
+                "tertiary-fixed": "#65fde6",
+                "error": "#ff716c",
+                "surface-container-high": "#171f36",
+                "secondary": "#2db7f2",
+                "error-container": "#9f0519",
+                "on-tertiary": "#00685c",
+                "outline": "#6f758b",
+                "on-secondary-container": "#f2f9ff",
+                "tertiary-fixed-dim": "#54eed8",
+                "secondary-fixed-dim": "#73ceff",
+                "surface-bright": "#222b47",
+                "secondary-container": "#00668a",
+                "primary-fixed": "#34b5fa",
+                "on-tertiary-container": "#005e54",
+                "on-secondary-fixed": "#00394f",
+                "primary-container": "#1faaef",
+                "surface-container-lowest": "#000000",
+                "secondary-dim": "#05a9e3",
+                "inverse-surface": "#faf8ff",
+                "surface-variant": "#1c253e",
+                "on-primary-container": "#002639",
+                "on-secondary": "#003044",
+                "on-secondary-fixed-variant": "#005777",
+                "on-primary": "#00324a",
+                "tertiary": "#c6fff3",
+                "on-surface": "#dfe4fe",
+                "surface": "#070d1f",
+                "surface-dim": "#070d1f",
+                "primary-dim": "#17a8ec",
+                "primary": "#39b8fd",
+                "tertiary-container": "#65fde6",
+                "on-background": "#dfe4fe",
+                "surface-tint": "#39b8fd",
+                "surface-container-low": "#0c1326",
+                "on-primary-fixed": "#00121e",
+                "tertiary-dim": "#48e5d0",
+                "on-tertiary-fixed": "#004a41",
+                "secondary-fixed": "#9bdaff"
+              },
+              fontFamily: {
+                "headline": ["Inter"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1.5rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #070d1f;
+            color: #dfe4fe;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(17, 25, 46, 0.7);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(57, 184, 253, 0.1);
+        }
+        .glow-border {
+            box-shadow: 0 0 15px rgba(57, 184, 253, 0.1);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ocean-gradient {
+            background: radial-gradient(circle at top right, #0c1326, #070d1f);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="ocean-gradient min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-[#070d1f]/70 dark:bg-[#070d1f]/70 backdrop-blur-3xl docked full-width top-0 z-50 shadow-[0_0_15px_rgba(57,184,253,0.1)] flex items-center justify-between px-6 py-4 w-full max-w-none sticky">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#39b8fd] text-3xl" data-icon="waves">waves</span>
+<div class="flex flex-col">
+<h1 class="text-[#39b8fd] font-black tracking-tighter text-2xl font-bold tracking-tight Inter">Debris Intelligence</h1>
+<span class="text-xs uppercase tracking-widest font-semibold text-[#a5aac2]">AI-powered underwater debris detection</span>
+</div>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<nav class="flex gap-6 text-sm font-medium">
+<a class="text-[#39b8fd]" href="#">Dashboard</a>
+<a class="text-[#a5aac2] hover:text-[#39b8fd] transition-colors" href="#">Analytics</a>
+<a class="text-[#a5aac2] hover:text-[#39b8fd] transition-colors" href="#">Archive</a>
+</nav>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest border border-primary/20 flex items-center justify-center overflow-hidden">
+<img alt="User Profile" data-alt="minimalist avatar placeholder with a subtle dark blue and cyan color scheme" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAH9DzAXkU5vB0jGFpl00ODWFG4vQ_tcu_wJE347H9ESIWoxmWgLKeorX7W6nhhwzPR2GBLaKqRyGxWDnGtDQGnyeVr9s1bQbpOjYc4NrPRZHtw9G9hirJxroWjBeP0zl_jX3x3Z5bKOL1JrqK8xxT972jELFp5vcONqV7BU-acfG0K6Gk_093Jsb34iL3tFDNm0t0tMXgNv0t03xNPL5v2Xi9qSpIBqKO22tmg54bnfx0dxhIFHESP5LRqhm-YnDV465ycria5ZlA"/>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 pt-12 space-y-12">
+<!-- Hero Summary Section -->
+<section class="relative">
+<div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-[100px]"></div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- 2x2 Grid of Stat Cards -->
+<div class="lg:col-span-7 grid grid-cols-2 gap-4 md:gap-6">
+<!-- Total Scans -->
+<div class="glass-panel glow-border rounded-2xl p-6 flex flex-col justify-between h-44 hover:scale-[1.02] transition-transform duration-300">
+<div class="flex justify-between items-start">
+<span class="text-[#a5aac2] text-xs font-bold uppercase tracking-widest">Total Scans</span>
+<span class="material-symbols-outlined text-primary" data-icon="search">search</span>
+</div>
+<div class="mt-4">
+<span class="text-5xl font-black tracking-tighter text-on-surface">24</span>
+<div class="text-[10px] text-tertiary-fixed mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]" data-icon="trending_up">trending_up</span>
+                                +12% FROM LAST WEEK
+                            </div>
+</div>
+</div>
+<!-- Objects Detected -->
+<div class="glass-panel glow-border rounded-2xl p-6 flex flex-col justify-between h-44 hover:scale-[1.02] transition-transform duration-300">
+<div class="flex justify-between items-start">
+<span class="text-[#a5aac2] text-xs font-bold uppercase tracking-widest">Objects Detected</span>
+<span class="material-symbols-outlined text-primary" data-icon="delete">delete</span>
+</div>
+<div class="mt-4">
+<span class="text-5xl font-black tracking-tighter text-on-surface">187</span>
+<div class="text-[10px] text-tertiary-fixed mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]" data-icon="check_circle">check_circle</span>
+                                VERIFIED BY AI
+                            </div>
+</div>
+</div>
+<!-- Avg Confidence -->
+<div class="glass-panel glow-border rounded-2xl p-6 flex flex-col justify-between h-44 hover:scale-[1.02] transition-transform duration-300">
+<div class="flex justify-between items-start">
+<span class="text-[#a5aac2] text-xs font-bold uppercase tracking-widest">Avg Confidence</span>
+<span class="material-symbols-outlined text-primary" data-icon="bar_chart">bar_chart</span>
+</div>
+<div class="mt-4">
+<span class="text-5xl font-black tracking-tighter text-on-surface">87.3<span class="text-2xl text-primary-fixed-dim">%</span></span>
+<div class="w-full bg-surface-container-highest h-1 rounded-full mt-3 overflow-hidden">
+<div class="bg-primary h-full w-[87%] shadow-[0_0_8px_#39b8fd]"></div>
+</div>
+</div>
+</div>
+<!-- Top Debris Type -->
+<div class="glass-panel glow-border rounded-2xl p-6 flex flex-col justify-between h-44 hover:scale-[1.02] transition-transform duration-300">
+<div class="flex justify-between items-start">
+<span class="text-[#a5aac2] text-xs font-bold uppercase tracking-widest">Top Debris Type</span>
+<span class="material-symbols-outlined text-primary" data-icon="emoji_events">emoji_events</span>
+</div>
+<div class="mt-4">
+<span class="text-4xl font-black tracking-tighter text-tertiary-fixed">Plastic</span>
+<div class="flex gap-1 mt-2">
+<div class="w-2 h-2 rounded-full bg-tertiary-fixed"></div>
+<span class="text-[10px] text-[#a5aac2]">38% OF TOTAL</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Class Distribution Chart (Donut) -->
+<div class="lg:col-span-5 glass-panel glow-border rounded-2xl p-8 h-full min-h-[400px] flex flex-col">
+<h3 class="text-[#a5aac2] text-xs font-bold uppercase tracking-widest mb-8">Classification Distribution</h3>
+<div class="flex-grow flex items-center justify-center relative">
+<!-- Simulated Donut Chart using CSS -->
+<div class="relative w-56 h-56 rounded-full border-[18px] border-surface-container-highest flex items-center justify-center">
+<div class="absolute inset-0 rounded-full border-[18px] border-transparent border-t-primary border-r-tertiary-fixed rotate-45"></div>
+<div class="flex flex-col items-center">
+<span class="text-4xl font-bold">187</span>
+<span class="text-[10px] text-[#a5aac2] uppercase tracking-widest">Detected</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-xs font-medium">Plastic (38%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-tertiary-fixed"></div>
+<span class="text-xs font-medium">Metal (24%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-[#9333ea]"></div>
+<span class="text-xs font-medium">Rubber (18%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-[#db2777]"></div>
+<span class="text-xs font-medium">Fabric (12%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-[#f97316]"></div>
+<span class="text-xs font-medium">Glass (8%)</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Recent Activity -->
+<section class="space-y-6">
+<div class="flex items-end justify-between">
+<div>
+<h2 class="text-2xl font-bold tracking-tight">Recent Activity</h2>
+<p class="text-sm text-[#a5aac2]">Latest scanning missions and detected anomalies</p>
+</div>
+<button class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    View Archive
+                    <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="space-y-4">
+<!-- Activity Item 1 -->
+<div class="glass-panel glow-border rounded-2xl p-4 flex items-center gap-6 group hover:bg-surface-container-high transition-colors">
+<div class="w-24 h-16 rounded-xl bg-surface-container-highest overflow-hidden relative">
+<img alt="Scanning mission thumbnail" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" data-alt="Grainy underwater footage of deep ocean floor with scattered synthetic debris under artificial submersible lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYD_cx2GEvcfPYIaCM23Jz32BDJkrw8FdPIyCW86VU-9J4556t1jZdrTfIvNhAA4Zo4hP85UfqFOLTIEBGYtxllhztDlvB3CvMCoX2IizY_RMCl0IoFN3BRpWcQsuFFTronwJU9Ha1lxnlhX5-DDsHCJDsDXKaX5ot_h0IZIFngytGjBG-qo4SceYA4jn80nwrNe8X7snfIhVgfiLRvsf8doaDXedwJEq41TDUxvzVlw-EuAiWhZfvh4tqFtCA6T8F_Mrc5G8EqAI"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="play_circle" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</div>
+</div>
+<div class="flex-grow grid grid-cols-1 md:grid-cols-4 items-center gap-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface">Scanned_File_01.mp4</span>
+<span class="text-[10px] text-[#a5aac2] uppercase tracking-tighter">Mission: North Basin A-12</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs text-[#a5aac2]">Detection Count</span>
+<span class="text-sm font-bold">12 objects found</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs text-[#a5aac2]">Timestamp</span>
+<span class="text-sm font-medium">2 mins ago</span>
+</div>
+<div class="flex gap-2">
+<span class="px-2 py-1 rounded bg-tertiary-fixed/10 text-tertiary-fixed text-[10px] font-bold uppercase">Plastic</span>
+<span class="px-2 py-1 rounded bg-primary/10 text-primary text-[10px] font-bold uppercase">Metal</span>
+</div>
+</div>
+<button class="material-symbols-outlined text-[#a5aac2] hover:text-primary transition-colors" data-icon="more_vert">more_vert</button>
+</div>
+<!-- Activity Item 2 -->
+<div class="glass-panel glow-border rounded-2xl p-4 flex items-center gap-6 group hover:bg-surface-container-high transition-colors">
+<div class="w-24 h-16 rounded-xl bg-surface-container-highest overflow-hidden relative">
+<img alt="Scanning mission thumbnail" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" data-alt="Close up drone capture of a metallic barrel resting on a coral reef with digital UI bounding boxes around it" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq1JNw7QfKpILLrX4LL8akCioSbQ1nUrU4tf60Jsnn_cQa_-J9Yjn--gA-SCrS5_fGqL969gfkWPvtnnGOybZMGxgw6IzaZF6s_ghRrZ0WiVAopgJhZPClViARexjzVTdNty0fygGbd6UIslv_E9RgQ4juPrsYVfZGv0nz2UR8RkWzICt9RG1DkZQGVXfkU9AcMpNsqdGJ7RPFNEAFK7lIyRkRard10WTej5ySM-WzqShzdSr7Vc_xy8INdh3h2Dbf_wpQTQ35fhs"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="image" style="font-variation-settings: 'FILL' 1;">image</span>
+</div>
+</div>
+<div class="flex-grow grid grid-cols-1 md:grid-cols-4 items-center gap-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface">Anomalous_Object_44.jpg</span>
+<span class="text-[10px] text-[#a5aac2] uppercase tracking-tighter">Mission: Deep Trench 9</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs text-[#a5aac2]">Detection Count</span>
+<span class="text-sm font-bold">1 object found</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs text-[#a5aac2]">Timestamp</span>
+<span class="text-sm font-medium">45 mins ago</span>
+</div>
+<div class="flex gap-2">
+<span class="px-2 py-1 rounded bg-error-dim/10 text-error-dim text-[10px] font-bold uppercase">Hazardous</span>
+</div>
+</div>
+<button class="material-symbols-outlined text-[#a5aac2] hover:text-primary transition-colors" data-icon="more_vert">more_vert</button>
+</div>
+<!-- Activity Item 3 -->
+<div class="glass-panel glow-border rounded-2xl p-4 flex items-center gap-6 group hover:bg-surface-container-high transition-colors">
+<div class="w-24 h-16 rounded-xl bg-surface-container-highest overflow-hidden relative">
+<img alt="Scanning mission thumbnail" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" data-alt="High-tech sonar rendering of the seafloor showing 3D wireframe models of discarded fishing nets and debris" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoD7UZk-_-SnC14pdNjzrPbUueAduLSqHbbQIz7YQ_ArHNtRSAAUC9m1XqBN1pO5xDFNydTxGPfVpyfykVsiYk4EddCDi9jX9llo5r9BBSr2sbw8JdIcVFTucL1pbOfn3lV-IxqkUcEUynFxraNtAD6hYX8FhhaPD6B8pPV3BVCSCAze8y5r8WLS9J4lsJIrmGFn8Eo7xbsydAlbZ-GVklnF0Fh4OS2wFsWEkXuaGlier2u7DU-3V75qLkI9PdNJGkFSFulqtg0es"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="videocam" style="font-variation-settings: 'FILL' 1;">videocam</span>
+</div>
+</div>
+<div class="flex-grow grid grid-cols-1 md:grid-cols-4 items-center gap-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface">Sonar_Sweep_99.mp4</span>
+<span class="text-[10px] text-[#a5aac2] uppercase tracking-tighter">Mission: Coastal Perimeter</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs text-[#a5aac2]">Detection Count</span>
+<span class="text-sm font-bold">42 objects found</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs text-[#a5aac2]">Timestamp</span>
+<span class="text-sm font-medium">3 hours ago</span>
+</div>
+<div class="flex gap-2">
+<span class="px-2 py-1 rounded bg-[#f97316]/10 text-[#f97316] text-[10px] font-bold uppercase">Glass</span>
+<span class="px-2 py-1 rounded bg-[#db2777]/10 text-[#db2777] text-[10px] font-bold uppercase">Fabric</span>
+</div>
+</div>
+<button class="material-symbols-outlined text-[#a5aac2] hover:text-primary transition-colors" data-icon="more_vert">more_vert</button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-[#0c1326]/80 dark:bg-[#0c1326]/80 backdrop-blur-2xl rounded-t-[2rem] border-t border-[#39b8fd]/10 shadow-[0_-10px_40px_rgba(0,0,0,0.4)]">
+<a class="bg-[#39b8fd]/20 text-[#39b8fd] rounded-2xl p-3 shadow-[0_0_15px_rgba(57,184,253,0.3)] active:scale-90 duration-150 flex flex-col items-center" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-[10px] font-medium Inter uppercase tracking-tighter mt-1">Dashboard</span>
+</a>
+<a class="text-[#4f5469] p-3 hover:bg-[#39b8fd]/10 hover:text-[#39b8fd] transition-all flex flex-col items-center" href="#">
+<span class="material-symbols-outlined" data-icon="upload_file">upload_file</span>
+<span class="text-[10px] font-medium Inter uppercase tracking-tighter mt-1">Upload</span>
+</a>
+<a class="text-[#4f5469] p-3 hover:bg-[#39b8fd]/10 hover:text-[#39b8fd] transition-all flex flex-col items-center" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="text-[10px] font-medium Inter uppercase tracking-tighter mt-1">Results</span>
+</a>
+<a class="text-[#4f5469] p-3 hover:bg-[#39b8fd]/10 hover:text-[#39b8fd] transition-all flex flex-col items-center" href="#">
+<span class="material-symbols-outlined" data-icon="compare_arrows">compare_arrows</span>
+<span class="text-[10px] font-medium Inter uppercase tracking-tighter mt-1">Compare</span>
+</a>
+<a class="text-[#4f5469] p-3 hover:bg-[#39b8fd]/10 hover:text-[#39b8fd] transition-all flex flex-col items-center" href="#">
+<span class="material-symbols-outlined" data-icon="layers">layers</span>
+<span class="text-[10px] font-medium Inter uppercase tracking-tighter mt-1">Heatmap</span>
+</a>
+<a class="text-[#4f5469] p-3 hover:bg-[#39b8fd]/10 hover:text-[#39b8fd] transition-all flex flex-col items-center" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="text-[10px] font-medium Inter uppercase tracking-tighter mt-1">History</span>
+</a>
+</nav>
+<!-- Floating Sonar Probe FAB (Contextual Action) -->
+<div class="fixed right-6 bottom-32 z-40">
+<button class="w-16 h-16 rounded-full bg-gradient-to-tr from-primary to-primary-container shadow-[0_0_30px_rgba(57,184,253,0.4)] flex items-center justify-center text-on-primary group overflow-hidden relative">
+<div class="absolute inset-0 bg-white/20 scale-0 group-hover:scale-100 transition-transform duration-500 rounded-full"></div>
+<span class="material-symbols-outlined text-3xl animate-pulse" data-icon="radar">radar</span>
+</button>
+</div>
+</body></html>

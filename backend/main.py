@@ -1,5 +1,7 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from ultralytics import YOLO
 from deep_sort_realtime.deepsort_tracker import DeepSort
 import cv2
@@ -114,7 +116,11 @@ async def detect_image(file: UploadFile = File(...)):
         cls = int(box.cls[0])
         class_name = model.names[cls]
 
-        cv2.rectangle(img, (x1, y1), (x2, y2), (0,255,0), 2)
+        cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+        label = f"{class_name} {conf:.2f}"
+        (lw, lh), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.55, 1)
+        cv2.rectangle(img, (x1, y1 - lh - 6), (x1 + lw + 4, y1), (0, 255, 0), -1)
+        cv2.putText(img, label, (x1 + 2, y1 - 4), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 0, 0), 1, cv2.LINE_AA)
 
         confidence_list.append(conf)
         class_counts[class_name] = class_counts.get(class_name, 0) + 1
@@ -189,11 +195,19 @@ async def detect_video_with_heatmap(file: UploadFile = File(...)):
             if not track.is_confirmed():
                 continue
 
-            l, t, w, h = map(int, track.to_ltrb())
-            cx, cy = int(l+w/2), int(t+h/2)
+            l, t, r, b = map(int, track.to_ltrb())
+            cx, cy = (l + r) // 2, (t + b) // 2
 
             geo_heatmap[(cx, cy)] += 1
-            cv2.rectangle(frame, (l,t), (l+w,t+h), (0,255,0), 2)
+            cv2.rectangle(frame, (l, t), (r, b), (0, 255, 0), 2)
+
+            track_id = track.track_id
+            det = track.get_det_class()
+            cls_name = model.names[det] if det is not None and det in model.names else "debris"
+            label = f"ID:{track_id} {cls_name}"
+            (lw, lh), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
+            cv2.rectangle(frame, (l, t - lh - 6), (l + lw + 4, t), (0, 255, 0), -1)
+            cv2.putText(frame, label, (l + 2, t - 4), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
 
         out.write(frame)
 
@@ -233,3 +247,14 @@ async def detect_video_with_heatmap(file: UploadFile = File(...)):
         "heatmap_image_base64": image_to_base64(heatmap_path),
         "heatmap_csv": csv_path
     }
+
+
+# ---------------- SERVE FRONTEND ---------------- #
+
+FRONTEND_DIR = os.path.join(os.path.dirname(BASE_DIR), "frontend")
+
+app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
+
+@app.get("/")
+async def serve_frontend():
+    return FileResponse(os.path.join(FRONTEND_DIR, "index.html"))

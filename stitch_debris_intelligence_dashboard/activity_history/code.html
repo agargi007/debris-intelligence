@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-container": "#65fde6",
+              "on-surface": "#dfe4fe",
+              "outline-variant": "#41475b",
+              "error-container": "#9f0519",
+              "secondary-container": "#00668a",
+              "secondary": "#2db7f2",
+              "secondary-dim": "#05a9e3",
+              "outline": "#6f758b",
+              "primary-dim": "#17a8ec",
+              "error": "#ff716c",
+              "tertiary": "#c6fff3",
+              "on-surface-variant": "#a5aac2",
+              "primary-fixed-dim": "#17a8ec",
+              "on-secondary-container": "#f2f9ff",
+              "inverse-primary": "#006591",
+              "on-primary-container": "#002639",
+              "surface": "#070d1f",
+              "on-secondary-fixed": "#00394f",
+              "background": "#070d1f",
+              "on-error": "#490006",
+              "error-dim": "#d7383b",
+              "secondary-fixed-dim": "#73ceff",
+              "surface-bright": "#222b47",
+              "primary-fixed": "#34b5fa",
+              "on-secondary-fixed-variant": "#005777",
+              "surface-dim": "#070d1f",
+              "on-primary": "#00324a",
+              "surface-container-highest": "#1c253e",
+              "inverse-on-surface": "#4f5469",
+              "surface-tint": "#39b8fd",
+              "primary-container": "#1faaef",
+              "on-secondary": "#003044",
+              "tertiary-fixed": "#65fde6",
+              "on-background": "#dfe4fe",
+              "surface-container-low": "#0c1326",
+              "on-primary-fixed-variant": "#003954",
+              "primary": "#39b8fd",
+              "on-tertiary-fixed-variant": "#00695e",
+              "on-error-container": "#ffa8a3",
+              "on-tertiary": "#00685c",
+              "on-tertiary-container": "#005e54",
+              "surface-variant": "#1c253e",
+              "secondary-fixed": "#9bdaff",
+              "tertiary-fixed-dim": "#54eed8",
+              "on-tertiary-fixed": "#004a41",
+              "on-primary-fixed": "#00121e",
+              "tertiary-dim": "#48e5d0",
+              "surface-container-lowest": "#000000",
+              "inverse-surface": "#faf8ff",
+              "surface-container": "#11192e",
+              "surface-container-high": "#171f36"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #070d1f;
+            color: #dfe4fe;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(17, 25, 46, 0.7);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(65, 71, 91, 0.2);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#070d1f]/70 backdrop-blur-3xl border-b border-[#39b8fd]/10 shadow-[0_0_15px_rgba(57,184,253,0.1)] flex items-center justify-between px-6 h-16 w-full">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#39b8fd]" style="font-variation-settings: 'FILL' 1;">waves</span>
+<h1 class="font-['Inter'] tracking-tight text-[#dfe4fe] text-xl font-bold">Activity History</h1>
+</div>
+<button class="text-error-dim font-semibold text-sm tracking-wide px-4 py-2 hover:bg-error-container/10 transition-colors active:scale-95 duration-200 rounded-xl">
+            Clear All
+        </button>
+</header>
+<main class="pt-24 px-6 max-w-5xl mx-auto space-y-8">
+<!-- Summary Bar -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<span class="label-sm text-on-surface-variant uppercase tracking-[0.2em] font-bold text-xs">Mission Analytics</span>
+<div class="flex items-baseline gap-3 mt-1">
+<span class="text-4xl font-extrabold tracking-tighter text-on-surface">24</span>
+<span class="text-on-surface-variant text-sm font-medium">Total Sessions</span>
+<div class="h-4 w-[1px] bg-outline-variant/30 mx-2"></div>
+<span class="text-4xl font-extrabold tracking-tighter text-primary">187</span>
+<span class="text-on-surface-variant text-sm font-medium">Objects Detected</span>
+</div>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
+<button class="px-5 py-2.5 rounded-full bg-primary text-on-primary-container font-bold text-sm shadow-[0_0_10px_rgba(57,184,253,0.3)] whitespace-nowrap">All</button>
+<button class="px-5 py-2.5 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-all border border-outline-variant/20 whitespace-nowrap text-sm font-medium">Images</button>
+<button class="px-5 py-2.5 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-all border border-outline-variant/20 whitespace-nowrap text-sm font-medium">Videos</button>
+<button class="px-5 py-2.5 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-all border border-outline-variant/20 whitespace-nowrap text-sm font-medium">Today</button>
+<button class="px-5 py-2.5 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-all border border-outline-variant/20 whitespace-nowrap text-sm font-medium">This Week</button>
+</div>
+</section>
+<!-- Session History List -->
+<div class="space-y-4">
+<!-- Entry 1 -->
+<div class="glass-card rounded-2xl p-4 flex items-center gap-4 group cursor-pointer hover:bg-surface-container-highest transition-all duration-300">
+<div class="relative w-24 h-24 shrink-0 rounded-xl overflow-hidden shadow-lg border border-outline-variant/20">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="underwater macro shot of a vibrant coral reef with clear blue water and sunlight rays filtering from the surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSJFuGWcNxKhlgs5jH2chB02VEPw1Tm4TMUriJi9WOVxcWR2ccdUXHQRonFdrByqTZOiIR4Ufe8lig5oZ0KrTHkA2twYvLRxzSj2aaL04Hb9LBZy94XMeezPeN9cdAenprignVtw8gVTqStqp_sY5eEPlQ7QH760dhctKqjZ4arW5D5nA2pyGGONQevD_0ndvt28QQBcfteFbUCL9nsjXQo73JcHUQG9RQbY6KUcRkQ3rJ-bZJUstTLVmcRYr2-xoRHUt_FWNg3-Q"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<span class="absolute bottom-1 right-1 material-symbols-outlined text-[16px] text-white">image</span>
+</div>
+<div class="flex-grow min-w-0">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-on-surface font-bold truncate tracking-tight">reef_scan_012.jpg</h3>
+<span class="text-primary text-sm font-bold bg-primary/10 px-2 py-0.5 rounded-lg border border-primary/20">91% Conf.</span>
+</div>
+<p class="text-on-surface-variant text-xs mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs">schedule</span> Today 2:34 PM
+                        <span class="mx-1">•</span> 8 objects
+                    </p>
+<div class="flex gap-2">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-tertiary-container/10 border border-tertiary-container/20 text-tertiary-container text-[10px] font-bold uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span> Plastic
+                        </span>
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-primary-fixed/10 border border-primary-fixed/20 text-primary-fixed text-[10px] font-bold uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-fixed"></span> Metal
+                        </span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+<!-- Entry 2 -->
+<div class="glass-card rounded-2xl p-4 flex items-center gap-4 group cursor-pointer hover:bg-surface-container-highest transition-all duration-300">
+<div class="relative w-24 h-24 shrink-0 rounded-xl overflow-hidden shadow-lg border border-outline-variant/20">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="deep sea remote operated vehicle floating in the dark midnight zone with bright white LED lights illuminating the seabed" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBstTCGc4Jlzh2pwTK1G_DT6k1f948QfReMEpaOa3hDWV3iyWzmWhnWS__5LG6FnFqxCmCRvY9xnBm8zYmQZCnE37KOQq9VGsnvrv4HNJ2pmoBvr_Y4sN95IMfhifqP7YqzTQqRZoO9RTbCJb5lSqf5oAib8S5-Zkt5v4DCltWZBRvPkxcvSp8q6IclONN2Vf4_J--a2qeEtnl2w2XlkRceqPH3E1EdRZzd-vEmAH_R5lAbKuVLeXLQec5924jMCbhxBGu3E4GFxA8"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-center justify-center">
+<span class="material-symbols-outlined text-white/80 text-3xl">play_circle</span>
+</div>
+<span class="absolute bottom-1 right-1 material-symbols-outlined text-[16px] text-white">videocam</span>
+</div>
+<div class="flex-grow min-w-0">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-on-surface font-bold truncate tracking-tight">ROV_dive_004.mp4</h3>
+<span class="text-on-surface-variant text-sm font-bold bg-surface-variant px-2 py-0.5 rounded-lg border border-outline-variant/20">84% Conf.</span>
+</div>
+<p class="text-on-surface-variant text-xs mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs">schedule</span> Today 11:20 AM
+                        <span class="mx-1">•</span> 23 objects
+                    </p>
+<div class="flex gap-2 overflow-x-auto no-scrollbar">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-tertiary-container/10 border border-tertiary-container/20 text-tertiary-container text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span> Plastic
+                        </span>
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-inverse-on-surface/10 border border-inverse-on-surface/20 text-on-surface-variant text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
+<span class="w-1.5 h-1.5 rounded-full bg-inverse-on-surface"></span> Rubber
+                        </span>
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-on-surface-variant/10 border border-on-surface-variant/20 text-on-surface-variant text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
+<span class="w-1.5 h-1.5 rounded-full bg-on-surface-variant"></span> Glass
+                        </span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+<!-- Entry 3 -->
+<div class="glass-card rounded-2xl p-4 flex items-center gap-4 group cursor-pointer hover:bg-surface-container-highest transition-all duration-300">
+<div class="relative w-24 h-24 shrink-0 rounded-xl overflow-hidden shadow-lg border border-outline-variant/20">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="sandy seabed in shallow tropical water with ripples and scattered seashells under soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCW4v-FgaeKEWEz2pn_6IZf_7c0VQk4VMVxN_P6X0Q0dcZrwPSxVuKzBtzam5p_JqetpPbeBgcvIt6XSa-bHgn5s19XeATOCsn10vhGfZ7np15CMdXX-UNuTd-GpFTYsTgjiMyAe6bci0JRIs1m3jZhYPI2fyqc4lZydU52ym2xsghEQ2aBQclxLucE3UToqPPK09hXoMsADt5d3oXUDNrFUF9799u4M-pM-KVZrECIJmp9yFgV6ldKZDZXoS-xIbGwQ4lQEgnzPo"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<span class="absolute bottom-1 right-1 material-symbols-outlined text-[16px] text-white">image</span>
+</div>
+<div class="flex-grow min-w-0">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-on-surface font-bold truncate tracking-tight">seabed_001.png</h3>
+<span class="text-on-surface-variant text-sm font-bold bg-surface-variant px-2 py-0.5 rounded-lg border border-outline-variant/20">88% Conf.</span>
+</div>
+<p class="text-on-surface-variant text-xs mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs">schedule</span> Yesterday 4:15 PM
+                        <span class="mx-1">•</span> 5 objects
+                    </p>
+<div class="flex gap-2">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-error-dim/10 border border-error-dim/20 text-error-dim text-[10px] font-bold uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-error-dim"></span> Fabric
+                        </span>
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-primary-fixed/10 border border-primary-fixed/20 text-primary-fixed text-[10px] font-bold uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-fixed"></span> Metal
+                        </span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+<!-- Entry 4 -->
+<div class="glass-card rounded-2xl p-4 flex items-center gap-4 group cursor-pointer hover:bg-surface-container-highest transition-all duration-300">
+<div class="relative w-24 h-24 shrink-0 rounded-xl overflow-hidden shadow-lg border border-outline-variant/20">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="underwater survey of a coral reef showing high detail of coral structures and surrounding aquatic life" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBh-FleW0r6hx-yaiG6vwmHE_oDZd5IVSBLMBSZeinQ9YSscs8K3UbmR0am5fvHC45NN-YJdivd408EqWLGwI1Eae2W7dKH5iSgFMmocNN2cxadeWNTlNqx7F0X-f5QFnat5JZeoql4jWxTU8yO3D9PpGb6zIQxRqU5XtZKuGf5nV3j10buyei8fVSvOoGK9uRbYG6XEtph_vDJkWyJV7GagsNy5OSGRfZ5Tcndb1kMoE0YeXoAb3C3uHvizjEGhHblpRVyi-EUjc0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-center justify-center">
+<span class="material-symbols-outlined text-white/80 text-3xl">play_circle</span>
+</div>
+<span class="absolute bottom-1 right-1 material-symbols-outlined text-[16px] text-white">videocam</span>
+</div>
+<div class="flex-grow min-w-0">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-on-surface font-bold truncate tracking-tight">coral_survey.mp4</h3>
+<span class="text-on-surface-variant text-sm font-bold bg-surface-variant px-2 py-0.5 rounded-lg border border-outline-variant/20">79% Conf.</span>
+</div>
+<p class="text-on-surface-variant text-xs mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs">schedule</span> Yesterday 9:00 AM
+                        <span class="mx-1">•</span> 31 objects
+                    </p>
+<div class="flex gap-2 overflow-x-auto no-scrollbar">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-tertiary-container/10 border border-tertiary-container/20 text-tertiary-container text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span> Plastic
+                        </span>
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-primary-fixed/10 border border-primary-fixed/20 text-primary-fixed text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-fixed"></span> Metal
+                        </span>
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-inverse-on-surface/10 border border-inverse-on-surface/20 text-on-surface-variant text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
+<span class="w-1.5 h-1.5 rounded-full bg-inverse-on-surface"></span> Rubber
+                        </span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+<!-- Entry 5 -->
+<div class="glass-card rounded-2xl p-4 flex items-center gap-4 group cursor-pointer hover:bg-surface-container-highest transition-all duration-300">
+<div class="relative w-24 h-24 shrink-0 rounded-xl overflow-hidden shadow-lg border border-outline-variant/20">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="murky green water near industrial dock pillars with submerged debris resting on the sediment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAI-aD7eY1vYPUqH7Pom_rbpmDpy5VehxdMBjTsQcR8PLMH6N5D4YRz8NVBrVhfFezmiPOvOnO8OpOY2GSHEZi2I3jPx2nJ5Wsy47SaTvpj1gc_LAtmQRCzT-QjVGc9r5acGJXznk8skF9sstt0SGL1pnVM5uWais2YjBfUyRGo2YkrBYtgvxTTAjNQFSvCURqzREpr3VKbB03A3BF_mmCtkM0jU7D0aE0gpjZXdblMObjtOLvHaQT4riVz_hp1JKRL0D9CmETMK70"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<span class="absolute bottom-1 right-1 material-symbols-outlined text-[16px] text-white">image</span>
+</div>
+<div class="flex-grow min-w-0">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-on-surface font-bold truncate tracking-tight">dock_area_03.jpg</h3>
+<span class="text-primary text-sm font-bold bg-primary/10 px-2 py-0.5 rounded-lg border border-primary/20">92% Conf.</span>
+</div>
+<p class="text-on-surface-variant text-xs mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs">schedule</span> Mar 22 6:45 PM
+                        <span class="mx-1">•</span> 12 objects
+                    </p>
+<div class="flex gap-2">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-tertiary-container/10 border border-tertiary-container/20 text-tertiary-container text-[10px] font-bold uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span> Plastic
+                        </span>
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-on-surface-variant/10 border border-on-surface-variant/20 text-on-surface-variant text-[10px] font-bold uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-on-surface-variant"></span> Glass
+                        </span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-[#0c1326]/80 backdrop-blur-2xl z-50 rounded-t-3xl border-t border-[#39b8fd]/20 shadow-[0_-10px_40px_rgba(0,0,0,0.4)]">
+<a class="flex flex-col items-center justify-center text-[#a5aac2] px-4 py-2 hover:text-[#39b8fd] transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="text-[10px] font-medium uppercase tracking-widest font-['Inter']">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#a5aac2] px-4 py-2 hover:text-[#39b8fd] transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1">cloud_upload</span>
+<span class="text-[10px] font-medium uppercase tracking-widest font-['Inter']">Upload</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#a5aac2] px-4 py-2 hover:text-[#39b8fd] transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1">analytics</span>
+<span class="text-[10px] font-medium uppercase tracking-widest font-['Inter']">Results</span>
+</a>
+<!-- Compare is added based on user requirement while keeping JSON consistency where possible -->
+<a class="flex flex-col items-center justify-center text-[#a5aac2] px-4 py-2 hover:text-[#39b8fd] transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1">compare</span>
+<span class="text-[10px] font-medium uppercase tracking-widest font-['Inter']">Compare</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#a5aac2] px-4 py-2 hover:text-[#39b8fd] transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1">layers</span>
+<span class="text-[10px] font-medium uppercase tracking-widest font-['Inter']">Heatmap</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#39b8fd]/15 text-[#39b8fd] rounded-2xl px-4 py-2 shadow-[0_0_10px_rgba(57,184,253,0.2)] active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">history</span>
+<span class="text-[10px] font-medium uppercase tracking-widest font-['Inter']">History</span>
+</a>
+</nav>
+</body></html>
