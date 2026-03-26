@@ -1,0 +1,7 @@
+[build]
+  publish = "frontend"
+  command = "sed -i \"s|window.BACKEND_URL || 'http://127.0.0.1:8000'|'$BACKEND_URL'|g\" frontend/index.html"
+
+[build.environment]
+  # Override BACKEND_URL in Netlify Dashboard → Site config → Environment variables
+  BACKEND_URL = "http://127.0.0.1:8000"

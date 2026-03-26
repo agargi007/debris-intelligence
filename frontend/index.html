@@ -723,7 +723,7 @@ tailwind.config = {
 <!-- ═══════════════════ SCRIPTS ═══════════════════ -->
 <script>
 /* ── Constants ──────────────────────────────────── */
-const API = 'http://127.0.0.1:8000';
+const API = window.BACKEND_URL || 'http://127.0.0.1:8000';
 const CLASS_COLORS = {
   Plastic: '#65fde6', Metal: '#34b5fa', Rubber: '#4f5469',
   Fabric: '#d7383b', Glass: '#a5aac2',
